@@ -48,9 +48,9 @@ class MyClock(private val textView: TextView, private val battery:TextView) {
 
     private fun refreshTime(context:Context) {
         val currentDate = Date()
-        val onlyTime = SimpleDateFormat("HH:mm")
+        val onlyTime = SimpleDateFormat("h:mm")
         val formattedTime = onlyTime.format(currentDate)
-        val onlyDate = SimpleDateFormat("EEE, dd MMMM")
+        val onlyDate = SimpleDateFormat("EEE, dd MMM")
         val formattedDate = onlyDate.format(currentDate)
         println("Current time: $formattedTime")
         //Log.d("=====","====="+formattedTime)
@@ -63,9 +63,9 @@ class MyClock(private val textView: TextView, private val battery:TextView) {
         val batteryStatus = context.registerReceiver(null, intentFilter)
         val level = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
         val scale = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-        val batteryPct = (level / scale.toDouble()) * 100
-        Log.d("=====","====="+batteryPct)
-        battery.text = ""+batteryPct
+        val batteryPct = ((level / scale.toDouble()) * 100).toInt()
+        Log.d("=====","====="+batteryPct+"%")
+        battery.text = ""+batteryPct+"%"
 
 
         if (running) {
